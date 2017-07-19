@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
+    <script src='http://cdn.bootcss.com/strophe.js/1.1.3/strophe.min.js'></script>
+    <script type="text/javascript" chatset='utf-8' src='test.js?v=12312'></script>
+</head>
+<body>
+JID：<input type="text" id="input-jid">
+<br>
+密码：<input type="password" id="input-pwd">
+<br>
+联系人ID：<input type="text" id="input-fid">
+<br>
+<button id="btn-login">登录(暂时不用)</button>
+<button id="create-room">创建房间</button>
+<button id="invite-room">邀请新客服</button>
+<button id="out-room">退出房间</button>
+<br>
+<button id="add-fid">添加联系人</button>
+<button id="sub-fid">订阅联系人</button>
+<button id="get-fid-list">获取联系人列表</button>
+<button id="del-fid">删除联系人</button>
+<button id="ping-fid">探测联系人在线状态</button>
+
+<div id="msg" style="height: 400px; width: 400px; overflow: scroll;"></div>
+<br>
+消息：
+<br>
+<textarea id="input-msg" cols="30" rows="4"></textarea>
+<br>
+<button id="btn-send">发送</button>
+</body>
+</html>

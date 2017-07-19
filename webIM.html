@@ -1,0 +1,122 @@
+<%include file="osp2016/agent/header.htm" %>
+<!--<script src="<% $cdn %>/osp2016/js/showErrorTip.js"></script>-->
+<div>
+    <br>
+    <br>
+    当前代理商、客服信息
+    <br>
+    服务商ID: <span id="aId"><% $loginUserData.aId %></span> | 客服ID: <span id="csId"><% $loginUserData.sId %></span> | 客服聊天账号： <span id="ppn-name"><% $loginUserData.passportName %></span> | 客服真实姓名： <span id="sName"><% $loginUserData.servicerName %></span>|
+
+    <br>
+    设置客服ID：<input style="border:1px solid green" type="text" id="sId"><br>
+    设置技能组ID：<input style="border:1px solid green" type="text" id="groupId"><br>
+    设置当前访客名称：<input style="border:1px solid green" type="text" id="userId">
+    <br>
+    查询测试列表：
+    <a href="javascript:;" onclick="getServerInfo()">获取客服信息</a>|
+    <a href="javascript:;" onclick="getOnlineList()">获取全部在线客服列表</a>|
+    <a href="javascript:;" onclick="getOnlineGroupList()">获取全部组客服在线列表</a>|
+    <a href="javascript:;" onclick="delAllServicer()">清空全部客服列表</a>|
+    <br>
+    访客测试列表：
+    <a href="javascript:;" onclick="addUser()">添加一个随机访客</a>|
+    <a href="javascript:;" onclick="getUserList()">获取全部访客列表</a>|
+    <a href="javascript:;" onclick="getOnGroupUserList()">获取全部组访客在线列表</a>|
+    <a href="javascript:;" onclick="delUser()">清空全部访客列表</a>|
+    <br>
+    分配规则测试：
+    <a href="javascript:;" onclick="overallAssign()">整体分配</a>|
+    <a href="javascript:;" onclick="loopAssign()">轮流分配</a>|
+    <a href="javascript:;" onclick="loadAssign()">负载分配</a>|
+    <br>
+</div>
+<div style="width: 100%;height:200px;overflow: auto">
+    测试结果：<br>
+    <textarea rows="30" cols="100" id="show-result"></textarea>
+</div>
+<script>
+    var sId = $('#sId').html();
+    if(!sId){
+        sId = $('#csId').html();
+    }
+    var pptName = $('#ppn-name').html();
+    var gId = $('#groupId').val();
+    var aId = $('#aId').html();
+    var url = '/osp2016/gnapi/embed/ajaxHandleIM.php';
+    var uId = $('#userId').val();
+
+    function show(data){
+        data = JSON.stringify(data);
+        $('#show-result').empty().text(data);
+    }
+
+    //获取客服信息
+    function getServerInfo() {
+        $.getJSON(url,{aId:aId,sId:sId,action:'getServerInfo'},function(data){
+            show(data);
+        });
+    }
+
+    //获取全部在线客服列表
+    function getOnlineList(){
+        $.getJSON(url,{aId:aId,action:'getOnlineList'},function(data){
+            show(data);
+        });
+    }
+
+    //获取全部组在线客服列表
+    function getOnlineGroupList(){
+        $.getJSON(url,{aId:aId,action:'getOnlineGroupList'},function(data){
+            show(data);
+        });
+    }
+    //清除全部客服列表信息
+    function delAllServicer(){
+        $.getJSON(url,{aId:aId,action:'delAllServicer'},function(data){
+            show(data);
+        });
+    }
+    //添加访客
+    function addUser() {
+        var uname = 'u' + (Math.random() + '').replace('.', '').substr(1, 6);
+        $.getJSON(url,{aId:aId,uId:uname,gId:gId,action:'addUser'},function(data){
+            show(data);
+        });
+    }
+
+    //获取全部访客列表
+    function getUserList() {
+        $.getJSON(url,{aId:aId,action:'getUserList'},function(data){
+            show(data);
+        });
+    }
+
+    function getOnGroupUserList(){
+        $.getJSON(url,{aId:aId,action:'getOnGroupUserList'},function(data){
+            show(data);
+        });
+    }
+
+    function delUser() {
+        $.getJSON(url,{aId:aId,action:'delUser'},function(data){
+            show(data);
+        });
+    }
+
+
+    function overallAssign(){
+        $.getJSON(url,{aId:aId,uId:uId,action:'overallAssign',sId:sId,gId:gId},function(data){
+            show(data);
+        });
+    }
+    function loopAssign(){
+        $.getJSON(url,{aId:aId,uId:uId,action:'loopAssign',sId:sId,gId:gId},function(data){
+            show(data);
+        });
+    }
+    function loadAssign(){
+        $.getJSON(url,{aId:aId,uId:uId,action:'loadAssign',sId:sId,gId:gId},function(data){
+            show(data);
+        });
+    }
+</script>
